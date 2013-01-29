@@ -40,14 +40,20 @@ function init() {
 function getLine(lineNum) {
 
 	//Fetch the line data from HSL API
-	var lineJson = HttpRequest.get(
-		url="http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=json&epsg_out=wgs84"
-		
-	)
+	var lineXml = XMLHttpRequest.open(
+		"GET",
+		"http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=xml&epsg_out=wgs84",
+		false
+	);
+
+	lineXml.send();
+	var lineDom = lineXml.responseXML;
+	
 
 
 	//Dull test functionality, remove!
-	document.write(lineJson[0].line_start)
+	//Example: Returns the name of the first child node in "response"
+	document.write(lineXml.getElementsByTagName("response")[0].childNodes[0].nodeValue)
 
 	//Add the line geometry to the map (as a layer?)
 
