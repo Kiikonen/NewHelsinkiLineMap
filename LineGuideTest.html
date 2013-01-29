@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Lineguide testing</title>
+
+<script src="http://www.openlayers.org/api/OpenLayers.js">
+</script>
+
+<script type="text/javascript">
+
+var user="kiikonen"
+var pass="busdriverisgreatguy"
+
+function init() {
+
+	var map = new OpenLayers.Map('map', {
+		controls: [
+		new OpenLayers.Control.Navigation(),
+		new OpenLayers.Control.PanZoomBar(),
+		new OpenLayers.Control.LayerSwitcher({'ascending':false}),
+		new OpenLayers.Control.MousePosition(),
+		new OpenLayers.Control.ScaleLine(),
+		new OpenLayers.Control.Attribution(),
+		],
+		center: new OpenLayers.LonLat(2770000, 8448000),
+		displayProjection: "EPSG:4326"
+	});
+
+	//OSM background map layer. NSL background map layer will be added.
+	var OSMLayer = new OpenLayers.Layer.OSM;
+	map.addLayer(OSMLayer);
+
+	//Add layers for line geometries
+
+	
+
+	map.zoomTo(11);
+};
+
+
+function getLine(lineNum) {
+
+	//Fetch the line data from HSL API
+	var lineJson = HttpRequest.get(
+		url="http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=json&epsg_out=wgs84"
+		
+	)
+
+
+	//Dull test functionality, remove!
+	document.write(lineJson[0].line_start)
+
+	//Add the line geometry to the map (as a layer?)
+
+	
+
+};
+</script>
+</head>
+
+<body onload="init()">
+
+
+<div id="form"
+style="
+position: absolute;
+top: 0px;
+height: 25px;
+">
+<form id="lineNumberForm">
+<b>New Line Guide</b> - Line number:
+<input type="text" id="lineNumInput" name="lineNumber">
+<button type="button" onclick="getLine( document.getElementById('lineNumInput') )">Get line</button>
+</form>
+
+
+</div>
+
+
+<div id="map"
+style="
+width:100%;
+position: absolute;
+left: 0px;
+bottom: 0px;
+top: 25px;
+">
+</div>
+
+
+</body>
+</html>
