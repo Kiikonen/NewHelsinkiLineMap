@@ -40,11 +40,14 @@ function init() {
 function getLine(lineNum) {
 
 	//Fetch the line data from HSL API
-	var lineXml = XMLHttpRequest.open(
+	var lineXml = new XMLHttpRequest();
+	lineXml.open(
 		"GET",
 		"http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=xml&epsg_out=wgs84",
 		false
 	);
+	var parser = new DOMParser();
+	var lineXml = parser.parseFromString(, 'text/xml')
 
 	lineXml.send();
 	var lineDom = lineXml.responseXML;
@@ -52,8 +55,8 @@ function getLine(lineNum) {
 
 
 	//Dull test functionality, remove!
-	//Example: Returns the name of the first child node in "response"
-	document.write(lineXml.getElementsByTagName("response")[0].childNodes[0].nodeValue)
+	//Example: Returns the name of the text node of the line shape field.
+	document.write(lineXml.getElementsByTagName("line_shape")[0].childNodes[0].nodeValue);
 
 	//Add the line geometry to the map (as a layer?)
 
@@ -75,7 +78,7 @@ height: 25px;
 <form id="lineNumberForm">
 <b>New Line Guide</b> - Line number:
 <input type="text" id="lineNumInput" name="lineNumber">
-<button type="button" onclick="getLine( document.getElementById('lineNumInput') )">Get line</button>
+<button type="button" onclick="getLine( document.getElementById('lineNumInput').value )">Get line</button>
 </form>
 
 
