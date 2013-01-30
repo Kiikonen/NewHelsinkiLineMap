@@ -40,23 +40,20 @@ function init() {
 function getLine(lineNum) {
 
 	//Fetch the line data from HSL API
-	var lineXml = new XMLHttpRequest();
-	lineXml.open(
-		"GET",
-		"http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=xml&epsg_out=wgs84",
-		false
-	);
-	var parser = new DOMParser();
-	var lineXml = parser.parseFromString(, 'text/xml')
+	
+	//var lineXml = new XMLHttpRequest();
+	//lineXml.open("GET", "http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=xml&epsg_out=wgs84", false	);
 
-	lineXml.send();
+	var url = "http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=xml&epsg_out=wgs84";
+	var parser = new DOMParser();
+	var lineXml = parser.parseFromString(url, 'text/xml')
 	var lineDom = lineXml.responseXML;
 	
 
 
 	//Dull test functionality, remove!
 	//Example: Returns the name of the text node of the line shape field.
-	document.write(lineXml.getElementsByTagName("line_shape")[0].childNodes[0].nodeValue);
+	document.write(lineXml.getElementsByTagName('line_shape')[0].childNodes[0].nodeValue);
 
 	//Add the line geometry to the map (as a layer?)
 
