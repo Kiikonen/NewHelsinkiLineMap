@@ -46,7 +46,7 @@ function getLine(lineNum) {
 	//var lineXml = new XMLHttpRequest();
 	//lineXml.open("GET", "http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=xml&epsg_out=wgs84", false	);
 
-	var url = "http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=xml&epsg_out=wgs84";
+	var url = "http://api.reittiopas.fi/hsl/prod/?user=" + user + "&pass=" + pass + "&request=lines&query=" + lineNum + "&format=json&epsg_out=wgs84";
 	var parser = new DOMParser();
 	var lineXml = parser.parseFromString(url, 'text/xml')
 	var lineDom = lineXml.responseXML;
